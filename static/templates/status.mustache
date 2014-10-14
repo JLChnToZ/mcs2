@@ -1,0 +1,16 @@
+  <div id="d{{hash}}" class="media" style="{{^status.maxPlayers}}display: none{{/status.maxPlayers}}">
+    <span class="pull-left">
+      <img src="{{status.icon}}" class="media-object" />
+    </span>
+    <div class="media-body">
+      <h4 class="media-heading">
+        <span class="motd">
+			<span class="mccolor">{{status.motd}}</span>
+		</span>
+        <small class="label playerinfo">
+          {{status.currentPlayers}} / {{status.maxPlayers}}
+        </small>
+      </h4>
+      <div class="add-info">{{>other_info}}</div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<HTML>
+<Head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
+  <Title>Minecraft 伺服器狀態人造衛星</Title>
+  <link rel="stylesheet" href="http://bootswatch.com/cyborg/bootstrap.min.css" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css" />
+  <base target="_blank" />
+  <style type="text/css">
+    body { padding-top: 80px; }
+    .mccolor { white-space: pre-wrap; }
+  </style>
+</Head>
+<Body role="document">
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand">
+          <i class="fa fa-globe"></i>
+          Minecraft 伺服器狀態人造衛星
+        </span>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="http://minecraft.net/">Minecraft 官方網站</a></li>
+          <li><a href="http://www.minecraft-hk.com/">MCHK</a></li>
+          <li><a href="http://hkcdc.org/">HKCDC</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container" role="main">
+    <div class="alert alert-info" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+      </button>
+      <b>注意!</b> 如果想增加自己的伺服器, 請前往 MCHK / HKCDC 論壇各自的伺服器版塊新增, 這裡將在稍候時間自動取得你的伺服器資料.
+    </div>
+    <div class="panel panel-primary info">
+      <div class="panel-heading">
+        <h3 class="panel-title"><span class="fa fa-info-circle"></span>
+          伺服器狀態列表
+        </h3>
+      </div>
+      <div class="panel-body" id="slist">
+        {{#status}}
+          {{>status}}
+        {{/status}}
+      </div>
+    </div>
+  </div>
+  <footer role="contentinfo">
+    <div class="container">
+      <p><b>Disclaimer:</b>
+        <span>Use this at your own risk, I don't respond if you lose anything while you use it, even the computer get exploded. :)</span>
+      </p>
+      <p>Minecraft Server Satillite &copy; 2014 <a href="http://gh.jlctz.tk/">Jeremy Lam (JLChnToZ)</a>.
+        This page is is not affiliated with <a href="http://mojang.com/">Mojang AB</a>.
+        Minecraft content and materials are trademarks and copyrights of Mojang AB or its licensors. All rights reserved.
+      </p>
+    </div>
+  </footer>
+  <script src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/momentjs/2.8.3/moment-with-locales.min.js"></script>
+  <script src="//cdn.jsdelivr.net/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="//cdn.jsdelivr.net/jquery.mustache/0.2.7/jquery.mustache.js"></script>
+  <script src="//cdn.jsdelivr.net/mustache.js/0.8.1/mustache.min.js"></script>
+  <script src="/js/mccolor.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/main.js"></script>
+</Body>
+</HTML>

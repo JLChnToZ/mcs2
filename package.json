@@ -1,0 +1,24 @@
+{
+  "name": "mcs2",
+  "version": "0.0.0",
+  "description": "Minecraft Server Satellite - Scans the Minecraft servers you want",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeremy Lam <jlchntoz@hkcdc.org> (http://gh.jlctz.tk/)",
+  "license": "GPLv3",
+  "dependencies": {
+    "argv": "0.0.2",
+    "bufferpack": "0.0.6",
+    "colors": "^1.0.3",
+    "encoding": "^0.1.8",
+    "express": "^4.9.6",
+    "jsonfile": "^2.0.0",
+    "mustache-express": "^1.2.0",
+    "seq": "^0.3.5",
+    "socket.io": "^1.1.0",
+    "start-stop-daemon": "^0.1.0",
+    "varint": "^3.0.1"
+  }
+}

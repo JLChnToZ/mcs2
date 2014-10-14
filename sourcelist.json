@@ -1,0 +1,12 @@
+[
+  {
+    "jsonPath": "http://hkcdc.org/server_list.php",
+    "thread": "http://bbs.hkcdc.org/thread-{tid}-1-1.html",
+    "ip": "{mc_ip}"
+  },
+  {
+    "jsonPath": "https://apps.wtako.net/mchkstat/list",
+    "thread": "http://www.minecraft-hk.com/thread-{ThreadID}-1-1.html",
+    "ip": "{IP}:{Port}"
+  }
+]
