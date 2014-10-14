@@ -11,7 +11,7 @@
   "dependencies": {
     "argv": "0.0.2",
     "bufferpack": "0.0.6",
-    "colors": "^1.0.3",
+    "cli-color": "^0.3.2",
     "encoding": "^0.1.8",
     "express": "^4.9.6",
     "jsonfile": "^2.0.0",
