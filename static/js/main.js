@@ -20,7 +20,18 @@ jQuery(function($) {
   $.ajax("/templates/status.mustache").done(function(d) {
     $.Mustache.add("status", d);
   });
-  var socket = io();
+  var socket = io(), firstConnect = true, lastUpdate = 0;
+  socket.on("connect", function() {
+    if(firstConnect) {
+      firstConnect = false;
+      return;
+    }
+    socket.emit("RECONNECT", { timeStamp: lastUpdate });
+    $("#disconnected").fadeOut("fast");
+  });
+  socket.on("reconnect_attempt", function(times) {
+    $("#disconnected").fadeIn("fast");
+  });
   socket.on("STATUS_UPDATE", function(data) {
     if(data) {
       var dname = "#d" + data.hash, $dname = $(dname);
@@ -38,6 +49,7 @@ jQuery(function($) {
       } else
         $("#slist").mustache("status", data, { method: "append" });
       $(dname + " .mccolor").minecraftFormat();
+      lastUpdate = Math.max(lastUpdate, data.lastUpdate);
     }
     calcTime();
   });

@@ -37,6 +37,15 @@ ssd(function() {
   
   app.use(express.static("./static"));
   
+  io.on("connection", function(socket) {
+    socket.on("RECONNECTED", function(data) {
+      var status = cron.serverstatus();
+      for(var i = 0; i < status.length; i++)
+        if(status[i].lastUpdate >= data.timeStamp)
+          socket.emit("STATUS_UPDATE", status[i]);
+    });
+  });
+  
   jsonfile.readFile("./config.json", function(err, cfg) {
     if(!cfg) cfg = {};
     var runPort = args.options.port || cfg.port || 3838;

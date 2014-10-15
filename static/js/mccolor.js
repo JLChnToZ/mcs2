@@ -1,5 +1,3 @@
-// Minecraft Color Formatting JQuery Plugin
-// (c) JLChnToZ 2014
 (function($) {
   var $create, MCColors, rndstr;
   MCColors = [0, 10, 160, 170, 2560, 2570, 4000, 2730, 1365, 1375, 1525, 1535, 3925, 3935, 4085, 4095];
@@ -27,11 +25,12 @@
       return typeof o.handler === "function" ? o.handler() : void 0;
     }
   };
-  $.fn.minecraftFormat = function(options) {
-    var cleanUp, content, escaper, outputEscaper, outputNonEscapedChar, _ref, _ref1, _ref2;
+  return $.fn.minecraftFormat = function(options) {
+    var cleanUp, content, debug, escaper, outputEscaper, outputNonEscapedChar, _ref, _ref1, _ref2, _ref3;
     escaper = "\u00A7";
     outputNonEscapedChar = true;
     outputEscaper = false;
+    debug = false;
     cleanUp = false;
     if (typeof options === "string") {
       content = options;
@@ -39,12 +38,14 @@
       content = options.content;
       escaper = (_ref = options.escaper) != null ? _ref : escaper;
       outputNonEscapedChar = (_ref1 = options.outputNonEscapedChar) != null ? _ref1 : outputNonEscapedChar;
-      outputEscaper = (_ref2 = options.outputEscaper) != null ? _ref2 : outputEscaper;
+      debug = (_ref2 = options.debug) != null ? _ref2 : debug;
+      outputEscaper = (_ref3 = options.outputEscaper) != null ? _ref3 : outputEscaper;
     }
     return $(this).each(function() {
-      var dummy, findTextNodes, textNodes;
+      var $e, dummy, findTextNodes, textNodes;
+      $e = $(this);
       if (content != null) {
-        $(this).empty();
+        $e.empty();
       }
       textNodes = [];
       findTextNodes = function(node) {
@@ -67,11 +68,12 @@
       if (textNodes.length === 0) {
         dummy = document.createTextNode("");
         textNodes.push(dummy);
-        $(this).append(dummy);
+        $e.append(dummy);
       }
       return $.each(textNodes, function() {
-        var $this, bold, buffer, char, color, escaped, italic, logOutput, lower, obfuscate, obfuscated, pushing, src, strike, styleChanged, styleContainer, underline, _create, _i, _len, _pop;
-        if ($(this).parent().data("mcformatted")) {
+        var $n, $this, bold, buffer, char, color, escaped, italic, logOutput, lower, obfuscate, obfuscated, pushing, src, strike, styleChanged, styleContainer, underline, _create, _i, _len, _pop;
+        $n = $(this);
+        if ($n.parent().data("mcformatted")) {
           return true;
         }
         logOutput = [""];
@@ -105,21 +107,26 @@
         _pop = function() {
           var buf, interval, obfuscatedContainer;
           if (buffer[buffer.length - 1] === escaper && styleChanged) {
-            buffer.splice(buffer.length - 1, 1);
+            buffer.pop();
           }
           if (buffer.length > 0) {
             buf = buffer.join("");
-            logOutput[0] += "%c" + buf;
-            logOutput.push("background:#000;" + styleContainer.attr("style"));
             $this.append(styleContainer.text(buf));
             if (obfuscated) {
+              if (obfuscated) {
+                buf = buf.replace(/./g, "\u25CF");
+              }
               obfuscatedContainer = styleContainer.data("text-length", styleContainer.text().length);
               interval = setInterval(function() {
-                obfuscatedContainer.text(rndstr(obfuscatedContainer.data("text-length")));
+                return obfuscatedContainer.text(rndstr(obfuscatedContainer.data("text-length")));
               }, 25);
               obfuscatedContainer.bind("destroyed", function() {
                 return clearInterval(interval);
               });
+            }
+            if (debug) {
+              logOutput[0] += "%c" + buf;
+              logOutput.push("background:#000;" + (styleContainer.attr('style')));
             }
             buffer = [];
           }
@@ -197,10 +204,10 @@
           }
         }
         _pop();
-        if (logOutput[0].length > 0) {
+        if (debug && logOutput[0].length > 0) {
           console.log.apply(console, logOutput);
         }
-        return $(this).after($this.children()).parent()[0].removeChild(this);
+        return $n.after($this.children()).parent()[0].removeChild(this);
       });
     });
   };
