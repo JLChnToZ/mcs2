@@ -3,5 +3,4 @@
 {{#status.players}}
   <div class="mccolor">{{name}}</div>
 {{/status.players}}
-<div class="nfo-link">更多資料: <a href="{{url}}">{{url}}</a></div>
-<div>最近更新: <span class="add-time" data-timestamp="{{lastUpdate}}">N/A</span></div>
+<div class="nfo-link">更多資料: <a href="{{url}}">{{url}}</a>{{^url}}沒有網址{{/url}}</div>

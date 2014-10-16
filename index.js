@@ -7,11 +7,13 @@ var mustacheExpress = require("mustache-express");
 var socketio = require("socket.io");
 
 var cron = require("./lib/cron");
+var singlerequest = require("./lib/singlerequest");
 
 ssd(function() {
   var app = express();
   var httpserv = http.Server(app);
   var io = socketio(httpserv);
+  var singlereq;
   
   var args = argv.option([
     {
@@ -38,12 +40,17 @@ ssd(function() {
   app.use(express.static("./static"));
   
   io.on("connection", function(socket) {
-    socket.on("RECONNECTED", function(data) {
+    socket.emit("init", {
+      timeStamp: new Date().getTime()
+    });
+    socket.on("reconnected", function(data) {
       var status = cron.serverstatus();
       for(var i = 0; i < status.length; i++)
         if(status[i].lastUpdate >= data.timeStamp)
-          socket.emit("STATUS_UPDATE", status[i]);
+          socket.emit("status_update", status[i]);
     });
+    if(singlereq)
+      singlereq.registerSocket(socket);
   });
   
   jsonfile.readFile("./config.json", function(err, cfg) {
@@ -53,7 +60,8 @@ ssd(function() {
     httpserv.listen(runPort, runIP, function() {
       console.log("Server listening on " + runIP + ":" + runPort);
     });
-    cron.run(io);
+    cron.run(io, cfg);
+    singlereq = singlerequest(cron, cfg);
   });
 
 });
