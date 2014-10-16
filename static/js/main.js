@@ -78,6 +78,9 @@ jQuery(function($) {
       addResult: $("#id_addsuccess").prop("checked")
     });
   });
+  $("body").on("click", ".navbar-collapse ul li a", function() {
+    $(".navbar-toggle:visible").click();
+  });
   $("div:visible .mccolor").minecraftFormat();
   calcTime();
 });
