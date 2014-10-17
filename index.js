@@ -6,6 +6,7 @@ var express = require("express");
 var mustacheExpress = require("mustache-express");
 var socketio = require("socket.io");
 var minify = require("express-minify");
+var compression = require("compression");
 
 var cron = require("./lib/cron");
 var singlerequest = require("./lib/singlerequest");
@@ -38,14 +39,15 @@ ssd(function() {
     res.render("index", { status: cron.serverstatus() });
   });
   
-  app.use(express.static("./static"));
   
   app.use(function(req, res, next) {
     if (/\.min\.(css|js)$/.test(req.url))
       res._no_minify = true;
     next();
   });
+  app.use(compression());
   app.use(minify());
+  app.use(express.static(__dirname + "/static"));
   
   io.on("connection", function(socket) {
     socket.emit("init", {
