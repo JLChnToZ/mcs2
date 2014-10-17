@@ -5,6 +5,7 @@ var jsonfile = require("jsonfile");
 var express = require("express");
 var mustacheExpress = require("mustache-express");
 var socketio = require("socket.io");
+var minify = require("express-minify");
 
 var cron = require("./lib/cron");
 var singlerequest = require("./lib/singlerequest");
@@ -38,6 +39,13 @@ ssd(function() {
   });
   
   app.use(express.static("./static"));
+  
+  app.use(function(req, res, next) {
+    if (/\.min\.(css|js)$/.test(req.url))
+      res._no_minify = true;
+    next();
+  });
+  app.use(minify());
   
   io.on("connection", function(socket) {
     socket.emit("init", {
