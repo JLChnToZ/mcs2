@@ -50,7 +50,7 @@ ssd(function() {
           socket.emit("status_update", status[i]);
     });
     if(singlereq)
-      singlereq.registerSocket(socket);
+      singlereq.registerSocket(io, socket);
   });
   
   jsonfile.readFile("./config.json", function(err, cfg) {
