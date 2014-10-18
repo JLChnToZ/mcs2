@@ -1,0 +1,46 @@
+<h4>運作原理</h4>
+<p>這套系統的運作方式是有點像掃瞄器的, 在每一次周期, 就會把列表上的伺服器一個一個的 &quot;掃瞄&quot;.<br />
+其次, 列表上的伺服器是會自動被分為兩類的, 一種叫 &quot;活躍伺服器&quot;, 另一種則是 &quot;非活躍伺服器&quot;.<br />
+在初始化的時候, 所有伺服器都會被歸類到 &quot;活躍伺服器&quot;, 如果發現是無法連線的話, 則會被丟到 &quot;非活躍伺服器&quot;.<br />
+其後如果處於 &quot;非活躍伺服器&quot; 的伺服器上線, 則會重新丟到 &quot;活躍伺服器&quot;, 如果連續 {{config.inactiveAttempt}}{{^config.inactiveAttempt}}2{{/config.inactiveAttempt}} 次掃瞄都沒有上線的話就會再次丟到 &quot;非活躍伺服器&quot;.<br />
+至於這樣分類的作用是甚麼呢? 為免使用過多不必要的頻寬和時間於掃瞄不活躍的伺服器, 因此 &quot;非活躍伺服器&quot; 和 &quot;活躍伺服器&quot; 是分開掃瞄的.<br />
+&quot;非活躍伺服器&quot; 的掃瞄周期是 {{config.pingInctiveServerPeriod}} 分鐘一次, &quot;活躍伺服器&quot; 則是 {{config.pingActiveServerPeriod}} 分鐘一次.</p>
+<hr />
+<h4>API 說明</h4>
+<p>此系統支援使用 HTTP 介面來查詢或/和增加自己的伺服器, 方法如下: </p>
+<code>http://mcs.jlctz.tk/api/{伺服器 IP 地址/網址}[:{接口}]?[addresult={false/true}][&amp;ref={來源網址}]</code>
+<p>
+  <b>{}</b>: 被大括號包著的是屬性名稱<br />
+  <b>[]</b>: 被中括號包著的是選擇性的選項<br />
+  <br />
+  <b>addresult=false</b>: 如果想在查詢成功後自動在伺服器列表增加伺服器的話, 請把這選項設為 false. 預設值是 true.<br />
+  <b>ref=...</b>: 如果想自訂來源網址的話, 請設置這選項. 如果沒有設置此選項的話, 將會自動取得進行查詢時的網址 (Referrer) (如有).
+</p>
+<p>查詢完成後, 不管結果如何, 傳回的都一定是 JSON 格式.</p>
+<p>一般而言, 傳回的格式會如下: </p>
+<code>{<br />
+  "host": "(網址/IP地址)",<br />
+  "port": (接口),<br />
+  "hash": "(標識碼)",<br />
+  "lastUpdate": (上次更新的時間),<br />
+  "inactive": (不活躍次數, 大於或等於 2 即表示已被歸類為 "不活躍伺服器"),<br />
+  "status": { (查詢結果, 詳細請參考下方) },<br />
+  "url": "(網址)"<br />
+}</code>
+<p>如果查詢成功的話, <code>status</code> 裡面將會是這樣的格式: </p>
+<code>"protocolVersion": (Minecraft 通訊協定版本),<br />
+  "version": "(伺服器版本)",<br />
+  "motd": "(使用 Minecraft 格式的伺服器標題)",<br />
+  "currentPlayers": (在線玩家數量),<br />
+  "maxPlayers": (最大玩家數量),<br />
+  "players": [ (玩家列表, 未必一定會提供)<br />
+    {<br />
+      "name": "(玩家名稱, 有些伺服器會用來顯示額外訊息)",<br />
+      "id": "(玩家 UUID)"<br />
+    },<br />
+    ...<br />
+  ],<br />
+  "icon": "(伺服器圖示, 如果沒有圖示將會是預設圖片的相對路徑)"</code>
+<p>如果查詢失敗, <code>status</code> 裡面將會是空物件 <code>{}</code> 或者 <code>null</code>, 甚至被省略.</p>
+<p>鑑於防止濫用和過量佔用系統的運算和頻寬, 每次每個 IP 地址查詢 (不管查詢方還是目標伺服器都一樣) 都不能少於 {{config.singleUseLimit}}{{^config.singleUseLimit}}10{{/config.singleUseLimit}} 秒, 否則將會獲得此訊息: </p>
+<code>{ "error": "Single use limit exceeds" }</code>
