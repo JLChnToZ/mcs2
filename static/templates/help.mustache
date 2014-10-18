@@ -4,7 +4,7 @@
 在初始化的時候, 所有伺服器都會被歸類到 &quot;活躍伺服器&quot;, 如果發現是無法連線的話, 則會被丟到 &quot;非活躍伺服器&quot;.<br />
 其後如果處於 &quot;非活躍伺服器&quot; 的伺服器上線, 則會重新丟到 &quot;活躍伺服器&quot;, 如果連續 {{config.inactiveAttempt}}{{^config.inactiveAttempt}}2{{/config.inactiveAttempt}} 次掃瞄都沒有上線的話就會再次丟到 &quot;非活躍伺服器&quot;.<br />
 至於這樣分類的作用是甚麼呢? 為免使用過多不必要的頻寬和時間於掃瞄不活躍的伺服器, 因此 &quot;非活躍伺服器&quot; 和 &quot;活躍伺服器&quot; 是分開掃瞄的.<br />
-&quot;非活躍伺服器&quot; 的掃瞄周期是 {{config.pingInctiveServerPeriod}} 分鐘一次, &quot;活躍伺服器&quot; 則是 {{config.pingActiveServerPeriod}} 分鐘一次.</p>
+&quot;非活躍伺服器&quot; 的掃瞄周期是 {{config.pingInactiveServerPeriod}} 分鐘一次, &quot;活躍伺服器&quot; 則是 {{config.pingActiveServerPeriod}} 分鐘一次.</p>
 <hr />
 <h4>API 說明</h4>
 <p>此系統支援使用 HTTP 介面來查詢或/和增加自己的伺服器, 方法如下: </p>
