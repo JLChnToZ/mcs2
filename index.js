@@ -63,10 +63,16 @@ ssd(function() {
       url: req.query.ref || req.get("referer") || "",
     }, function(err, data) {
       res.type("application/json");
-      if(err && err.message == "Single use limit exceeds")
+      res.header("Access-Control-Allow-Origin", "*")
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      res.header("Cache-Control", "no-cache, must-revalidate");
+      if(err && err.message == "Single use limit exceeds") {
+        res.header("Expires", new Date().toUTCString());
         res.json({ error: err.message });
-      else
+      } else {
+        res.header("Expires", new Date(Date.now() + ("singleUseLimit" in config ? config.singleUseLimit : 0)).toUTCString());
         res.json(data);
+      }
     });
   });
   
