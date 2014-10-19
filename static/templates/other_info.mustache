@@ -1,7 +1,9 @@
 <div>{{host}}:{{port}}</div>
 <div>版本: <span class="mccolor label">{{status.version}}</span></div>
+<div class="playerdetails">
 {{#status.players}}
-  <div class="mccolor">{{name}}</div>
+  <div class="mccolor">{{name}}{{^name}}&nbsp;{{/name}}</div>
 {{/status.players}}
+</div>
 <div class="nfo-link">更多資料: <a href="{{url}}">{{url}}</a>{{^url}}沒有網址{{/url}}</div>
 <div>最近更新: <span class="add-time" data-timestamp="{{lastUpdate}}">(未知)</span></div>

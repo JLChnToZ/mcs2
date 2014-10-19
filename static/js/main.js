@@ -80,6 +80,15 @@ jQuery(function($) {
   });
   $("body").on("click", ".navbar-collapse ul li a", function() {
     $(".navbar-toggle:visible").click();
+  }).popover({
+    html: true,
+    placement: "bottom",
+    selector: ".motd, .media-object, .playerinfo",
+    trigger: "hover",
+    container: "body",
+    content: function() {
+      return $(this).closest(".media").find(".playerdetails").html();
+    }
   });
   $("div:visible .mccolor").minecraftFormat();
   calcTime();
