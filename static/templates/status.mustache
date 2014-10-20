@@ -10,7 +10,13 @@
         <small class="label playerinfo">
           {{status.currentPlayers}} / {{status.maxPlayers}}
         </small>
+        <button class="showplayers btn btn-default btn-sm" type="button">
+          <i class="fa fa-users"></i>
+          顯示玩家資料…
+          <span class="caret"></span>
+        </button>
       </h4>
+      <div>{{host}}:{{port}}</div>
       <div class="add-info">{{>other_info}}</div>
     </div>
 </div>

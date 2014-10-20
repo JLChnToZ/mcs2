@@ -83,8 +83,8 @@ jQuery(function($) {
   }).popover({
     html: true,
     placement: "bottom",
-    selector: ".motd, .media-object, .playerinfo",
-    trigger: "hover",
+    selector: ".showplayers",
+    trigger: "focus",
     container: "body",
     content: function() {
       return $(this).closest(".media").find(".playerdetails").html();
