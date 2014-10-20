@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <HTML>
 <Head>
+  <!-- 別往這裡看啦, 我會害羞的~~ >////< -->
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
@@ -27,9 +28,18 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="#request" data-toggle="modal" data-target="#requestmodal">增加 / 查詢</a></li>
-          <li><a href="#help" data-toggle="modal" data-target="#helpmodal">說明</a></li>
-          <li><a href="https://github.com/JLChnToZ/mcs2"><i class="fa fa-github-alt"></i> Fork Me!</a></li>
+          <li><a href="#request" data-toggle="modal" data-target="#requestmodal">
+            <i class="fa fa-search"></i>
+            增加 / 查詢
+          </a></li>
+          <li><a href="#help" data-toggle="modal" data-target="#helpmodal">
+            <i class="fa fa-question-circle"></i>
+            說明 / API
+          </a></li>
+          <li><a href="https://github.com/JLChnToZ/mcs2">
+            <i class="fa fa-github-alt"></i>
+            Fork Me!
+          </a></li>
           <li><a href="http://minecraft.net/">Minecraft 官方網站</a></li>
           <li><a href="http://www.minecraft-hk.com/">MCHK</a></li>
           <li><a href="http://hkcdc.org/">HKCDC</a></li>
@@ -45,7 +55,10 @@
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">關閉</span>
           </button>
-          <h4 class="modal-title" id="requestmodaltitle">增加 / 個別查詢伺服器</h4>
+          <h4 class="modal-title" id="requestmodaltitle">
+            <i class="fa fa-search"></i>
+            增加 / 個別查詢伺服器
+          </h4>
         </div>
         <div class="modal-body">
           <form id="requestform" role="form">
@@ -83,7 +96,10 @@
           <div id="dresult"></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <i class="fa fa-times"></i>
+            關閉
+          </button>
         </div>
       </div>
     </div>
@@ -96,13 +112,19 @@
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">關閉</span>
           </button>
-          <h4 class="modal-title" id="helpmodaltitle">說明</h4>
+          <h4 class="modal-title" id="helpmodaltitle">
+            <i class="fa fa-question-circle"></i>
+            說明
+          </h4>
         </div>
         <div class="modal-body">
           {{>help}}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <i class="fa fa-times"></i>
+            關閉
+          </button>
         </div>
       </div>
     </div>
