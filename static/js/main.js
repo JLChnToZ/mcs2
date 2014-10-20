@@ -55,6 +55,7 @@ jQuery(function($) {
   });
   socket.on("single_use_status_update", function(data) {
     if(data.status) {
+      data.hash += "_"; // The hash must be unique, and it will duplicate with the one in the list.
       $("#dresult").mustache("status", data, { method: "html" });
       $("#dresult .mccolor").minecraftFormat();
       calcTime();
