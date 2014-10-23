@@ -1,0 +1,14 @@
+body {
+  padding-top: 80px;
+}
+.mccolor {
+  white-space: pre-wrap;
+  color: transparent; /* Hide unformatted text. */
+  font-family: monospace, sans-serif;
+}
+#disconnected, #noresult, #limitexceeds, .playerdetails {
+  display: none;
+}
+div.popover {
+  max-width:80%
+}

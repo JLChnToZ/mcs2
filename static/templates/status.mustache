@@ -3,20 +3,20 @@
       <img src="{{status.icon}}" class="media-object" />
     </span>
     <div class="media-body">
-      <h4 class="media-heading">
+      <h5 class="media-heading">
         <span class="motd">
           <span class="mccolor">{{status.motd}}</span>
         </span>
         <small class="label playerinfo">
           {{status.currentPlayers}} / {{status.maxPlayers}}
         </small>
-        <button class="showplayers btn btn-default btn-sm" type="button">
-          <i class="fa fa-users"></i>
-          顯示玩家資料…
-          <span class="caret"></span>
-        </button>
-      </h4>
+      </h5>
       <div>{{host}}:{{port}}</div>
+      <button class="showplayers btn btn-default btn-sm" type="button">
+        <i class="fa fa-users"></i>
+        玩家資料
+        <span class="caret"></span>
+      </button>
       <div class="add-info">{{>other_info}}</div>
     </div>
 </div>
