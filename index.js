@@ -10,6 +10,7 @@ var params = require("express-params");
 var compression = require("compression");
 var _ = require("underscore");
 
+var dataURL = require("./lib/dataurl");
 var cron = require("./lib/cron");
 var singlerequest = require("./lib/singlerequest");
 
@@ -50,6 +51,24 @@ ssd(function() {
       status: cron.serverstatus(),
       config: cfg
     });
+  });
+  
+  app.param("hash", /^([a-f0-9]{32})(?:.png)?$/i);
+  app.get("/icons/:hash", function(req, res) {
+    var record = cron.findServer(req.params.hash[1]);
+    if(record.status && record.status.icon) {
+      var data = dataURL(record.status.icon);
+      if(!data) {
+        res.redirect(record.status.icon);
+      } else {
+        res.type(data.type);
+        res.header("Access-Control-Allow-Origin", "*")
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        res.send(data.buffer);
+      }
+    } else {
+      res.redirect("/images/mc.png");
+    }
   });
   
   app.param("ipaddr", /^((?:(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|(?:(?:\w|\w[\w\-]*\w)\.)*(?:\w|\w[\w\-]*\w))(?::(0*(?:[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])))?(?:\.json)?$/i);
