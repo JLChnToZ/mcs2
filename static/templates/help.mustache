@@ -39,8 +39,9 @@
       "id": "(玩家 UUID)"<br />
     },<br />
     ...<br />
-  ],<br />
-  "icon": "(伺服器圖示, 如果沒有圖示將會是預設圖片的相對路徑)"</code>
+  ]</code>
 <p>如果查詢失敗, <code>status</code> 裡面將會是空物件 <code>{}</code> 或者 <code>null</code>, 甚至被省略.</p>
 <p>鑑於防止濫用和過量佔用系統的運算和頻寬, 每次每個 IP 地址查詢 (不管查詢方還是目標伺服器都一樣) 都不能少於 {{config.singleUseLimit}}{{^config.singleUseLimit}}10{{/config.singleUseLimit}} 秒, 否則將會獲得此訊息: </p>
 <code>{ "error": "Single use limit exceeds" }</code>
+<p>如果需要取得圖示的話, 圖片網址將會是:</p>
+<code>http://mcs.jlctz.tk/icons/{標識碼}</code>
