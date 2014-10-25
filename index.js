@@ -8,7 +8,7 @@ var socketio = require("socket.io");
 var minify = require("express-minify");
 var params = require("express-params");
 var compression = require("compression");
-var _ = require("underscore");
+var _ = require("underscore-plus");
 
 var dataURL = require("./lib/dataurl");
 var cron = require("./lib/cron");
@@ -42,7 +42,7 @@ ssd(function() {
   app.set("views", __dirname + "/static/templates");
   
   app.get("/", function(req, res) {
-    var cfg = _.clone(config);
+    var cfg = _.deepClone(config);
     cfg.singleUseLimit /= 1000;
     cfg.fetchServerListPeriod /= 60 * 1000;
     cfg.pingActiveServerPeriod /= 60 * 1000;
