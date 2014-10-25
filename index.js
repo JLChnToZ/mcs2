@@ -53,7 +53,7 @@ ssd(function() {
     });
   });
   
-  app.param("hash", /^([a-f0-9]{32})(?:.png)?$/i);
+  app.param("hash", /^([a-f0-9]{32})(?:_)?(?:\.png)?$/i);
   app.get("/icons/:hash", function(req, res) {
     var record = cron.findServer(req.params.hash[1]);
     if(record.status && record.status.icon) {
