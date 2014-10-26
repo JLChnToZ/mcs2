@@ -32,6 +32,9 @@ jQuery(function($) {
     timeOffset = (new Date().getTime()) - data.timeStamp;
     $("#querybutton").button("reset");
   });
+  socket.on("online_count", function(data) {
+    $("#onlinecount").text(data.count);
+  });
   socket.on("status_update", function(data) {
     if(data) {
       var dname = "#d" + data.hash, $dname = $(dname);
