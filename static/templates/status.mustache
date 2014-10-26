@@ -7,16 +7,15 @@
         <span class="motd">
           <span class="mccolor">{{status.motd}}</span>
         </span>
-        <small class="label label-default playerinfo">
-          {{status.currentPlayers}} / {{status.maxPlayers}}
-        </small>
+        <button type="button" class="btn btn-default btn-sm showplayers" title="上線玩家">
+          <i class="fa fa-users"></i>
+          <span class="playerinfo">
+            {{status.currentPlayers}} / {{status.maxPlayers}}
+          </span>
+          <span class="caret"></span>
+        </button>
       </h5>
       <div>{{host}}:{{port}}</div>
-      <button class="showplayers btn btn-default btn-sm" type="button">
-        <i class="fa fa-users"></i>
-        玩家資料
-        <span class="caret"></span>
-      </button>
       <div class="add-info">{{>other_info}}</div>
     </div>
 </div>
