@@ -1,7 +1,10 @@
 <div>版本: <span class="mccolor label label-default">{{status.version}}</span></div>
 <div class="playerdetails">
 {{#status.players}}
-  <div class="mccolor">{{name}}{{^name}}&nbsp;{{/name}}</div>
+  <div class="mccolor" data-uuid="{{id}}">{{name}}&nbsp;</div>
+{{/status.players}}
+{{^status.players}}
+  <div class="label label-danger">沒有資料</div>
 {{/status.players}}
 </div>
 <div class="nfo-link">更多資料: <a href="{{url}}">{{url}}</a>{{^url}}沒有網址{{/url}}</div>

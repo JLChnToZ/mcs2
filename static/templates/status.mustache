@@ -1,4 +1,4 @@
-  <div id="d{{hash}}" class="media" style="{{^status.maxPlayers}}display: none{{/status.maxPlayers}}">
+  <div id="d{{hash}}" class="media"{{^status.maxPlayers}} style="display: none"{{/status.maxPlayers}}>
     <span class="pull-left">
       <img src="/icons/{{hash}}.png" class="media-object" />
     </span>
@@ -16,6 +16,8 @@
         </button>
       </h5>
       <div>{{host}}:{{port}}</div>
-      <div class="add-info">{{>other_info}}</div>
+      <div class="add-info">
+        {{>other_info}}
+      </div>
     </div>
 </div>
