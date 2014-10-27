@@ -138,8 +138,8 @@ ssd(function() {
   
   jsonfile.readFile("./config.json", function(err, cfg) {
     if(cfg) config = cfg;
-    var runPort = args.options.port || config.port || 3838;
-    var runIP = args.options.ip || config.ip || "0.0.0.0";
+    var runPort = args.options.port || config.port || process.env.PORT || 3838;
+    var runIP = args.options.ip || config.ip || process.env.IP || "0.0.0.0";
     httpserv.listen(runPort, runIP, function() {
       console.log("Server listening on " + runIP + ":" + runPort);
     });
