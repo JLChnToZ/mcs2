@@ -1,12 +1,12 @@
 jQuery(function($) {
-  var socket = io(), firstConnect = true, lastUpdate = 0, timeOffest = 0;
+  var socket = io(), firstConnect = true, lastUpdate = 0, timeOffest = 0, isTraditional = true;
   function $create(elm) {
     return $(document.createElement(elm));
   }
   function calcTime() {
     $("div:visible .add-time").each(function() {
       var t = parseInt($(this).attr("data-timestamp"));
-      $(this).text(t ? moment(t + timeOffest).locale("zh-tw").fromNow() : "-");
+      $(this).text(t ? moment(t + timeOffest).locale(isTraditional ? "zh-tw" : "zh-cn").fromNow() : "-");
     });
   }
   $.ajax("/templates/other_info.mustache").done(function(d) {
@@ -53,6 +53,7 @@ jQuery(function($) {
         $("#slist").mustache("status", data, { method: "append" });
       $(dname + " .mccolor").minecraftFormat();
       lastUpdate = Math.max(lastUpdate, data.lastUpdate);
+      if(!isTraditional) $(dname).t2s();
     }
     calcTime();
   });
@@ -61,6 +62,7 @@ jQuery(function($) {
       data.hash += "_"; // The hash must be unique, and it will duplicate with the one in the list.
       $("#dresult").mustache("status", data, { method: "html" });
       $("#dresult .mccolor").minecraftFormat();
+      if(!isTraditional) $("#dresult").t2s();
       calcTime();
     } else {
       $("#noresult").fadeIn("fast");
@@ -93,6 +95,15 @@ jQuery(function($) {
     content: function() {
       return $(this).closest(".media").find(".playerdetails").html();
     }
+  });
+  $("#t2s").click(function(e) {
+    e.preventDefault();
+    isTraditional = !isTraditional;
+    if(isTraditional)
+      $("body").s2t();
+    else
+      $("body").t2s();
+    $(this).text(isTraditional ? "简" : "繁");
   });
   $("div:visible .mccolor").minecraftFormat();
   calcTime();
