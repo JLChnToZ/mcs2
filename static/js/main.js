@@ -104,6 +104,7 @@ jQuery(function($) {
     else
       $("body").t2s();
     $(this).text(isTraditional ? "简" : "繁");
+    calcTime();
   });
   $("div:visible .mccolor").minecraftFormat();
   calcTime();
