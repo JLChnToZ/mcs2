@@ -1,5 +1,11 @@
 jQuery(function($) {
   var socket = io(), firstConnect = true, lastUpdate = 0, timeOffest = 0, isTraditional = true;
+  var indeces = lunr(function() {
+    this.field("motd", { boost: 10 });
+    this.field("players", { boost: 8 });
+    this.field("url", { boost: 6 });
+    this.ref("id");
+  });
   function $create(elm) {
     return $(document.createElement(elm));
   }
@@ -8,6 +14,29 @@ jQuery(function($) {
       var t = parseInt($(this).attr("data-timestamp"));
       $(this).text(t ? moment(t + timeOffest).locale(isTraditional ? "zh-tw" : "zh-cn").fromNow() : "-");
     });
+  }
+  function indexItem(e) {
+    indeces.add({
+      id: e.attr("id"),
+      motd: e.find(".motd").text(),
+      players: e.find(".players").text(),
+      url: e.find(".host").text()
+    });
+  }
+  function doSearch() {
+    var val = $("#searchtext").val();
+    if(val.length > 0) {
+      $("#slist .media").hide();
+      $.each(indeces.search(val), function(i, e) {
+        var $e = $("#" + e.ref);
+        if($e.attr("data-hidden") != "true") $e.show();
+      });
+    } else {
+      $("#slist .media").each(function(i, e) {
+        var $e = $(e);
+        $e.toggle($e.attr("data-hidden") != "true");
+      });
+    }
   }
   $.ajax("/templates/other_info.mustache").done(function(d) {
     $.Mustache.add("other_info", d);
@@ -37,7 +66,7 @@ jQuery(function($) {
   });
   socket.on("status_update", function(data) {
     if(data) {
-      var dname = "#d" + data.hash, $dname = $(dname);
+      var dname = "#d" + data.hash, $dname = $(dname), hasData;
       if($dname.length >= 0) {
         $(dname + " .media-object").attr("src", "/icons/" + data.hash + ".png?t=" + data.lastUpdate);
         $(dname + " .motd").empty().append(
@@ -45,15 +74,20 @@ jQuery(function($) {
         );
         $(dname + " .playerinfo").text(data.status.currentPlayers + " / " + data.status.maxPlayers);
         $(dname + " .add-info").mustache("other_info", data, { method: "html" });
-        if(data.status && data.status.maxPlayers)
-          $dname.fadeIn("medium");
-        else
-          $dname.fadeOut("medium");
+        hasData = data.status && data.status.maxPlayers;
+        if($("#searchtext").val().length <= 0) {
+          if(hasData)
+            $dname.fadeIn("medium");
+          else
+            $dname.fadeOut("medium");
+        }
+        $dname.attr("data-hidden", hasData ? "false" : "true");
       } else
         $("#slist").mustache("status", data, { method: "append" });
       $(dname + " .mccolor").minecraftFormat();
       lastUpdate = Math.max(lastUpdate, data.lastUpdate);
-      if(!isTraditional) $(dname).t2s();
+      if(!isTraditional) $dname.t2s();
+      indexItem($dname);
     }
     calcTime();
   });
@@ -84,7 +118,7 @@ jQuery(function($) {
       addResult: $("#id_addsuccess").prop("checked")
     });
   });
-  $("body").on("click", ".navbar-collapse ul li a", function() {
+  $("body").on("click", ".navbar-collapse ul li a:not(.dropdown-toggle)", function() {
     $(".navbar-toggle:visible").click();
   }).popover({
     html: true,
@@ -95,6 +129,10 @@ jQuery(function($) {
     content: function() {
       return $(this).closest(".media").find(".playerdetails").html();
     }
+  }).tooltip({
+    selector: ".navbar-nav li a",
+    container: "body",
+    placement: "bottom"
   });
   $("#t2s").click(function(e) {
     e.preventDefault();
@@ -106,6 +144,14 @@ jQuery(function($) {
     $(this).text(isTraditional ? "简" : "繁");
     calcTime();
   });
+  $("#search").submit(function(e) {
+    e.preventDefault();
+    doSearch();
+  });
+  $("#searchtext").keyup(doSearch);
   $("div:visible .mccolor").minecraftFormat();
+  $("#slist .media").each(function(i, e) {
+    indexItem($(e));
+  });
   calcTime();
 });

@@ -23,46 +23,48 @@
           <span class="icon-bar"></span>
         </button>
         <span class="navbar-brand">
-          <i class="fa fa-globe"></i>
-          <span class="hidden-sm">
-            Minecraft 伺服器狀態人造衛星
-          </span>
+          <span class="hidden-sm">Minecraft 伺服器狀態人造衛星</span>
         </span>
       </div>
       <div class="collapse navbar-collapse">
+        <form class="navbar-form navbar-left" role="search" id="search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="從列表搜尋伺服器" id="searchtext" />
+          </div>
+        </form>
         <ul class="nav navbar-nav">
-          <li><a href="#request" data-toggle="modal" data-target="#requestmodal" target="_self">
+          <li><a href="#request" data-toggle="modal" data-target="#requestmodal" target="_self" title="增加 / 查詢">
             <i class="fa fa-search"></i>
-            <span class="hidden-md hidden-sm">
-              增加 / 查詢
-            </span>
+            <span class="visible-xs-inline">增加 / 查詢</span>
           </a></li>
-          <li><a href="#help" data-toggle="modal" data-target="#helpmodal" target="_self">
+          <li><a href="#help" data-toggle="modal" data-target="#helpmodal" target="_self" title="說明 / API">
             <i class="fa fa-question-circle"></i>
-            <span class="hidden-md hidden-sm">
-              說明 / API
-            </span>
+            <span class="visible-xs-inline">說明 / API</span>
           </a></li>
-          <li><a href="https://github.com/JLChnToZ/mcs2">
+          <li><a href="https://github.com/JLChnToZ/mcs2" title="Fork Me!">
             <i class="fa fa-github-alt"></i>
-            <span class="hidden-md hidden-sm">Fork Me!</span>
+            <span class="visible-xs-inline">Fork Me!</span>
           </a></li>
-          <li><a href="http://minecraft.net/">Minecraft 官方網站</a></li>
-          <li><a href="http://www.minecraft-hk.com/">MCHK</a></li>
-          <li><a href="http://hkcdc.org/">HKCDC</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="相關連結">
+              <i class="fa fa-globe"></i>
+              <span class="visible-xs-inline">相關連結</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="http://minecraft.net/">Minecraft 官網</a></li>
+              <li><a href="http://www.minecraft-hk.com/">MCHK Community</a></li>
+              <li><a href="http://hkcdc.org/">HKCDC</a></li>
+            </ul>
+          </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a href="###" target="_self" id="t2s" data-toggle="tooltip" data-placement="bottom" title="繁簡轉換">
-              简
-            </a>
-          </li>
-          <li>
-            <a href="###" target="_self" data-toggle="tooltip" data-placement="bottom" title="上線人數">
-              <i class="fa fa-users"></i>
-              <span id="onlinecount" class="label label-default">1</span>
-            </a>
-          </li>
+          <li><a href="###" target="_self" id="t2s" title="繁簡轉換">简</a></li>
+          <li><a href="###" target="_self" title="上線人數">
+            <i class="fa fa-users"></i>
+            <span class="sr-only">上線人數</span>
+            <span id="onlinecount" class="label label-default">1</span>
+          </a></li>
         </ul>
       </div>
     </div>
@@ -161,7 +163,7 @@
       <b>不好! 斷線了!</b><br />
       線路不穩中... 正在嘗試再次連線...
     </div>
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info fade in" role="alert">
       <button type="button" class="close" data-dismiss="alert">
         <span aria-hidden="true">&times;</span>
         <span class="sr-only">關閉</span>
@@ -199,8 +201,10 @@
   </footer>
   
   <!-- Script Loader -->
-  <!-- Bundled: jQuery, Bootstrap, Mustache, Moment.js with locale, jQuery Mustache, jQuery-s2t -->
+  <!-- Bundled: jQuery, Bootstrap, Mustache, Moment.js with locale, jQuery Mustache, jQuery-s2t, jQuery Async, Lunr.js -->
   <script src="/js/vendor/bundled.min.js"></script>
+  <script src="/js/vendor/jquery.async.js"></script>
+  <script src="/js/vendor/lunr.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/mccolor.js"></script>
   <script src="/js/main.js"></script>

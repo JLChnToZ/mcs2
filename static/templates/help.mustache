@@ -18,28 +18,28 @@
 </p>
 <p>查詢完成後, 不管結果如何, 傳回的都一定是 JSON 格式.</p>
 <p>一般而言, 傳回的格式會如下: </p>
-<code>{<br />
-  "host": "(網址/IP地址)",<br />
-  "port": (接口),<br />
-  "hash": "(標識碼)",<br />
-  "lastUpdate": (上次更新的時間),<br />
-  "inactive": (不活躍次數, 大於或等於 2 即表示已被歸類為 "不活躍伺服器"),<br />
-  "status": { (查詢結果, 詳細請參考下方) },<br />
-  "url": "(網址)"<br />
-}</code>
+<pre><code>{
+  "host": "(網址/IP地址)",
+  "port": (接口),
+  "hash": "(標識碼)",
+  "lastUpdate": (上次更新的時間),
+  "inactive": (不活躍次數, 大於或等於 2 即表示已被歸類為 "不活躍伺服器"),
+  "status": { (查詢結果, 詳細請參考下方) },
+  "url": "(網址)"
+}</code></pre>
 <p>如果查詢成功的話, <code>status</code> 裡面將會是這樣的格式: </p>
-<code>"protocolVersion": (Minecraft 通訊協定版本),<br />
-  "version": "(伺服器版本)",<br />
-  "motd": "(使用 Minecraft 格式的伺服器標題)",<br />
-  "currentPlayers": (在線玩家數量),<br />
-  "maxPlayers": (最大玩家數量),<br />
-  "players": [ (玩家列表, 未必一定會提供)<br />
-    {<br />
-      "name": "(玩家名稱, 有些伺服器會用來顯示額外訊息)",<br />
-      "id": "(玩家 UUID)"<br />
-    },<br />
-    ...<br />
-  ]</code>
+<pre><code>  "protocolVersion": (Minecraft 通訊協定版本),
+  "version": "(伺服器版本)",
+  "motd": "(使用 Minecraft 格式的伺服器標題)",
+  "currentPlayers": (在線玩家數量),
+  "maxPlayers": (最大玩家數量),
+  "players": [ (玩家列表, 未必一定會提供)
+    {
+      "name": "(玩家名稱, 有些伺服器會用來顯示額外訊息)",
+      "id": "(玩家 UUID)"
+    },
+    ...
+  ]</code></pre>
 <p>如果查詢失敗, <code>status</code> 裡面將會是空物件 <code>{}</code> 或者 <code>null</code>, 甚至被省略.</p>
 <p>鑑於防止濫用和過量佔用系統的運算和頻寬, 每次每個 IP 地址查詢 (不管查詢方還是目標伺服器都一樣) 都不能少於 {{config.singleUseLimit}}{{^config.singleUseLimit}}10{{/config.singleUseLimit}} 秒, 否則將會獲得此訊息: </p>
 <code>{ "error": "Single use limit exceeds" }</code>
