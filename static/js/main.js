@@ -113,8 +113,7 @@ jQuery(function($) {
       data[i].type = "line";
       data[i].showInLegend = true;
       data[i].markerSize = 0;
-      for(var j = 0; j < data[i].dataPoints.length; j++)
-        data[i].dataPoints[j].x = new Date(data[i].dataPoints[j].x);
+      data[i].xValueType = "dateTime";
     }
     $("#chart").CanvasJSChart({
       zoomEnabled: true,
