@@ -6,9 +6,13 @@ body {
   color: transparent; /* Hide unformatted text. */
   font-family: monospace, sans-serif;
 }
-#disconnected, #noresult, #limitexceeds, .playerdetails {
+#disconnected, #noresult, #noresult2, #limitexceeds, .playerdetails {
   display: none;
 }
 div.popover {
-  max-width:80%
+  max-width: 80%
+}
+#chart {
+  height: 300px;
+  width: 100%;
 }

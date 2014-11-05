@@ -13,6 +13,7 @@ var _ = require("underscore-plus");
 var dataURL = require("./lib/dataurl");
 var cron = require("./lib/cron");
 var singlerequest = require("./lib/singlerequest");
+var dbadapter = require("./lib/dbadapter");
 
 ssd(function() {
   var app = express();
@@ -22,6 +23,7 @@ ssd(function() {
   var iplist = {};
   var config = {};
   var connectedList = [];
+  var stats;
   
   var args = argv.option([
     {
@@ -123,6 +125,30 @@ ssd(function() {
         if(status[i].lastUpdate >= data.timeStamp)
           socket.emit("status_update", status[i]);
     });
+    socket.on("request_stats", function(data) {
+      var result = [], amount = 0;
+      var eachData = function(hash) {
+        var servData = cron.findServer(hash);
+        stats.getRecords(hash, config.stats.keepTimespan, function(err, d) {
+          if(err)
+            console.log(err);
+          else {
+            var r = {
+              name: servData.host + ":" + servData.port,
+              dataPoints: []
+            };
+            for(var j = 0; j < d.length; j++)
+              r.dataPoints.push({ x: d[j].time.getTime(), y: d[j].playerCount });
+            result.push(r);
+          }
+          amount++;
+          if(amount >= data.length)
+            socket.emit("stats_data", result);
+        });
+      };
+      for(var i = 0; i < data.length; i++)
+        eachData(data[i]);
+    });
     if(singlereq) {
       var _api = singlereq.exposeAPI();
       socket.on("request", function(req) {
@@ -136,6 +162,18 @@ ssd(function() {
     }
   });
   
+  var broadcastUpdate = function(data) {
+    io.emit("status_update", data);
+    if(stats)
+      stats.saveRecord({
+        id: data.hash,
+        time: new Date(data.lastUpdate),
+        playerCount: data.status ? data.status.currentPlayers : 0
+      }, function(err) {
+        if(err) console.log(err);
+      });
+  };
+  
   jsonfile.readFile("./config.json", function(err, cfg) {
     if(cfg) config = cfg;
     var runPort = args.options.port || config.port || process.env.PORT || 3838;
@@ -143,8 +181,15 @@ ssd(function() {
     httpserv.listen(runPort, runIP, function() {
       console.log("Server listening on " + runIP + ":" + runPort);
     });
-    cron.run(io, config);
-    singlereq = singlerequest(io, cron, config);
+    if(config.stats && config.stats.enabled)
+      stats = new dbadapter(config.stats, function(err) {
+        if(err) {
+          console.log(err);
+          stats = null;
+        }
+      });
+    cron.run(broadcastUpdate, config);
+    singlereq = singlerequest(broadcastUpdate, cron, config);
   });
 
 });

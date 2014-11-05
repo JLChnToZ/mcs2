@@ -4,9 +4,12 @@
     </span>
     <div class="media-body">
       <h5 class="media-heading">
-        <span class="motd">
-          <span class="mccolor">{{status.motd}}</span>
-        </span>
+        <label>
+          <input type="checkbox" class="selectserver" value="{{hash}}" />
+          <span class="motd">
+            <span class="mccolor">{{status.motd}}</span>
+          </span>
+        </label>
         <button type="button" class="btn btn-default btn-sm showplayers" title="上線玩家">
           <i class="fa fa-users"></i>
           <span class="playerinfo">

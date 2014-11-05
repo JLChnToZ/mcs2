@@ -108,6 +108,31 @@ jQuery(function($) {
     $("#limitexceeds").stop().fadeIn("fast").delay(5000).fadeOut("fast");
     $("#querybutton").button("reset");
   });
+  socket.on("stats_data", function(data) {
+    for(var i = 0; i < data.length; i++) {
+      data[i].type = "line";
+      data[i].showInLegend = true;
+      data[i].markerSize = 0;
+      for(var j = 0; j < data[i].dataPoints.length; j++)
+        data[i].dataPoints[j].x = new Date(data[i].dataPoints[j].x);
+    }
+    $("#chart").CanvasJSChart({
+      zoomEnabled: true,
+      title: {
+        text: "伺服器人數統計"
+      },
+      toolTip: {
+        shared: "true"
+      },
+      axisX: {
+        title: "時間"
+      },
+      axisY: {
+        title: "人數"
+      },
+      data: data
+    });
+  });
   $("#requestform").submit(function(e) {
     e.preventDefault();
     $("#querybutton").button("loading");
@@ -143,6 +168,22 @@ jQuery(function($) {
       $("body").t2s();
     $(this).text(isTraditional ? "简" : "繁");
     calcTime();
+  });
+  $("#showstats").click(function(e) {
+    e.preventDefault();
+    var arr = [];
+    $(".media:visible .selectserver:checked").each(function() {
+      arr.push($(this).val());
+    });
+    $("#statsmodal").modal("show");
+    $("#chart").toggle(arr.length > 0);
+    if(arr.length > 0) {
+      $("#noresult2").hide();
+      setTimeout(function() {
+        socket.emit("request_stats", arr);
+      }, 800); // Delay a bit.
+    } else
+      $("#noresult2").fadeIn("fast");
   });
   $("#search").submit(function(e) {
     e.preventDefault();

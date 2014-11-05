@@ -23,5 +23,10 @@
       "thread": "http://www.minecraft-hk.com/thread-{ThreadID}-1-1.html",
       "ip": "{IP}:{Port}"
     }
-  ]
+  ],
+  "stats": {
+    "enabled": true,
+    "db": "mongodb://localhost/mcs",
+    "keepTimespan": 10080000
+  }
 }
