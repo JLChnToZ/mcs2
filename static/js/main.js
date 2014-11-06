@@ -1,5 +1,32 @@
+// Culture info for Canvas.js
+CanvasJS.addCultureInfo("zh-tw", {
+  zoomText: "放大/縮小",
+  panText: "移動視點",
+  resetText: "重設",
+  savePNGText: "另存成 PNG 圖片",
+  saveJPGText: "另存成 JPG 圖片",
+  menuText: "更多選項",
+  days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+  shortDays: ["日", "一", "二", "三", "四", "五", "六"],
+  months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+  shortMonths: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+});
+CanvasJS.addCultureInfo("zh-cn", {
+  zoomText: "放大/缩小",
+  panText: "移动视点",
+  resetText: "重设",
+  savePNGText: "另存成 PNG 图片",
+  saveJPGText: "另存成 JPG 图片",
+  menuText: "更多选项",
+  days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+  shortDays: ["日", "一", "二", "三", "四", "五", "六"],
+  months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+  shortMonths: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+});
+
+// Main Function
 jQuery(function($) {
-  var socket = io(), firstConnect = true, lastUpdate = 0, timeOffest = 0, isTraditional = true;
+  var socket = io(), firstConnect = true, lastUpdate = 0, timeOffset = 0, isTraditional = true;
   var indeces = lunr(function() {
     this.field("motd", { boost: 10 });
     this.field("players", { boost: 8 });
@@ -12,7 +39,7 @@ jQuery(function($) {
   function calcTime() {
     $("div:visible .add-time").each(function() {
       var t = parseInt($(this).attr("data-timestamp"));
-      $(this).text(t ? moment(t + timeOffest).locale(isTraditional ? "zh-tw" : "zh-cn").fromNow() : "-");
+      $(this).text(t ? moment(t + timeOffset).locale(isTraditional ? "zh-tw" : "zh-cn").fromNow() : "-");
     });
   }
   function indexItem(e) {
@@ -65,7 +92,7 @@ jQuery(function($) {
     $("#onlinecount").text(data.count);
   });
   socket.on("time_update", function(timeStamp) {
-    timeOffest = Date.now() - timeStamp;
+    timeOffset = Date.now() - timeStamp;
   });
   socket.on("status_update", function(data) {
     if(data) {
@@ -120,17 +147,18 @@ jQuery(function($) {
     }
     $("#chart").CanvasJSChart({
       zoomEnabled: true,
-      title: {
-        text: "伺服器人數統計"
-      },
+      exportEnabled: true,
+      theme: "theme2",
+      backgroundColor: "transparent",
+      culture: isTraditional ? "zh-tw" : "zh-cn",
       toolTip: {
-        shared: "true"
+        shared: false
       },
       axisX: {
-        title: "時間"
+        title: isTraditional ? "時間" : "时间"
       },
       axisY: {
-        title: "人數"
+        title: isTraditional ? "人數" : "人数"
       },
       data: data
     });
@@ -157,7 +185,7 @@ jQuery(function($) {
       return $(this).closest(".media").find(".playerdetails").html();
     }
   }).tooltip({
-    selector: ".navbar-nav li a",
+    selector: ".navbar-nav li a, .canvasjs-chart-toolbar button",
     container: "body",
     placement: "bottom"
   });
@@ -197,7 +225,7 @@ jQuery(function($) {
     indexItem($(e));
   });
   setInterval(function() {
-    $("#timenow").text(moment(Date.now() - timeOffset).locale(isTraditional ? "zh-tw" : "zh-cn").format("LLL"));
+    $("#timenow").text(moment(Date.now() - timeOffset).locale(isTraditional ? "zh-tw" : "zh-cn").format("dddd, MMMM Do YYYY, h:mm:ss a"));
   }, 250);
   calcTime();
 });
