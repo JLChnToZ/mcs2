@@ -162,6 +162,10 @@ ssd(function() {
     }
   });
   
+  setInterval(function() {
+    io.emit("time_update", Date.now());
+  }, 10000);
+  
   var broadcastUpdate = function(data) {
     io.emit("status_update", data);
     if(stats)

@@ -58,11 +58,14 @@ jQuery(function($) {
     $("#disconnected").fadeIn("fast");
   });
   socket.on("init", function(data) {
-    timeOffset = (new Date().getTime()) - data.timeStamp;
+    timeOffset = Date.now() - data.timeStamp;
     $("#querybutton").button("reset");
   });
   socket.on("online_count", function(data) {
     $("#onlinecount").text(data.count);
+  });
+  socket.on("time_update", function(timeStamp) {
+    timeOffest = Date.now() - timeStamp;
   });
   socket.on("status_update", function(data) {
     if(data) {
@@ -193,5 +196,8 @@ jQuery(function($) {
   $("#slist .media").each(function(i, e) {
     indexItem($(e));
   });
+  setInterval(function() {
+    $("#timenow").text(moment(Date.now() - timeOffset).locale(isTraditional ? "zh-tw" : "zh-cn").format("LLL"));
+  }, 250);
   calcTime();
 });

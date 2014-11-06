@@ -203,10 +203,16 @@
         <span class="sr-only">關閉</span>
       </button>
       <i class="fa fa-lightbulb-o"></i>
-      <b>提示: </b> 如果想增加自己的伺服器, 除了可在上面增加之外, 還可以前往
+      <b>提示: </b>
+      如果想增加自己的伺服器, 除了可在上面增加之外, 還可以前往
       <a href="http://www.minecraft-hk.com/forum-45-1.html">MCHK</a> /
       <a href="http://bbs.hkcdc.org/forum-672-1.html">HKCDC</a>
       論壇各自的伺服器版塊新增, 這裡將在稍候時間自動取得你的伺服器資料.
+    </div>
+    <div class="alert alert-info fade in" role="alert">
+      <i class="fa fa-clock-o"></i>
+      <b>人造衛星系統時間:</b>
+      <span id="timenow"></span>
     </div>
     <div class="panel panel-primary info">
       <div class="panel-heading">
@@ -241,13 +247,6 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/mccolor.js"></script>
   <script src="/js/main.js"></script>
-  <script>
-    !function(M,C,S,s,a,t){M.GoogleAnalyticsObject=s,M[s]||(M[s]=function(){(M[s].q=M[s].q||[]).push(arguments)}),M[s].l=+new Date,a=C.createElement(S),t=C.getElementsByTagName(S)[0],a.src="//www.google-analytics.com/analytics.js",t.parentNode.insertBefore(a,t)}(this,document,"script","ga");
-    
-    ga("create", "UA-48567277-3", "mcs.jlctz.tk");
-    ga("require", "displayfeatures");
-    ga("require", "linkid", "linkid.js");
-    ga("send", "pageview");
-  </script>
+  {{>footer}}
 </Body>
 </HTML>
