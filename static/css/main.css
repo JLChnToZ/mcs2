@@ -16,3 +16,21 @@ div.popover {
   height: 300px;
   width: 100%;
 }
+.mccolor span {
+  text-shadow:
+    1px 1px 1px #000,
+    -0.5px -0.5px 0 #000,
+    0.5px -0.5px 0 #000,
+    -0.5px 0.5px 0 #000,
+    0.5px 0.5px 0 #000,
+    0.5px 0 0 #000,
+    -0.5px 0 0 #000,
+    0 0.5px 0 #000,
+    0 -0.5px 0 #000;
+}
+.media img {
+  -webkit-filter: drop-shadow(0px 0px 2.2px rgba(0,0,0,1));
+  filter: url(/images/dropshadow.svg#drop-shadow);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#444')";
+  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#444')";
+}

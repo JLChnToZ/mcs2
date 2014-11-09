@@ -2,6 +2,21 @@
     <span class="pull-left">
       <img src="/icons/{{hash}}.png" class="media-object" />
     </span>
+    <div class="btn-group pull-right">
+      <button type="button" class="btn btn-default btn-sm showplayers" title="上線玩家">
+        <i class="fa fa-users"></i>
+        <span class="playerinfo">
+          {{status.currentPlayers}} / {{status.maxPlayers}}
+        </span>
+        <span class="caret"></span>
+      </button>
+      <button type="button" class="btn btn-default btn-sm showgraph" value="{{hash}}" title="人數圖表">
+        <i class="fa fa-line-chart"></i>
+      </button>
+      <button type="button" class="btn btn-default btn-sm refreshstatus" data-host="{{host}}" data-port="{{port}}" title="重新整理">
+        <i class="fa fa-refresh"></i>
+      </button>
+    </div>
     <div class="media-body">
       <h5 class="media-heading">
         <label>
@@ -10,13 +25,6 @@
             <span class="mccolor">{{status.motd}}</span>
           </span>
         </label>
-        <button type="button" class="btn btn-default btn-sm showplayers" title="上線玩家">
-          <i class="fa fa-users"></i>
-          <span class="playerinfo">
-            {{status.currentPlayers}} / {{status.maxPlayers}}
-          </span>
-          <span class="caret"></span>
-        </button>
       </h5>
       <div class="host">{{host}}:{{port}}</div>
       <div class="add-info">

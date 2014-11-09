@@ -1,11 +1,24 @@
-<div>版本: <span class="mccolor label label-default">{{status.version}}</span></div>
+<div>
+  <i class="fa fa-code-fork" title="版本"></i>
+  <span class="mccolor label label-default">{{status.version}}</span>
+</div>
 <div class="playerdetails">
 {{#status.players}}
   <div class="mccolor" data-uuid="{{id}}">{{name}}&nbsp;</div>
 {{/status.players}}
 {{^status.players}}
-  <div class="label label-danger">沒有資料</div>
+  <div class="label label-danger">
+    <i class="fa fa-times"></i>
+    沒有資料
+  </div>
 {{/status.players}}
 </div>
-<div class="nfo-link">更多資料: <a href="{{url}}">{{url}}</a>{{^url}}沒有網址{{/url}}</div>
-<div>最近更新: <span class="add-time" data-timestamp="{{lastUpdate}}">(未知)</span></div>
+<div class="nfo-link">
+  <i class="fa fa-external-link" title="更多資料"></i>
+  <a href="{{url}}">{{url}}</a>
+  {{^url}}沒有網址{{/url}}
+</div>
+<div>
+  <i class="fa fa-clock-o" title="最近更新"></i>
+  <span class="add-time" data-timestamp="{{lastUpdate}}">(未知)</span>
+</div>

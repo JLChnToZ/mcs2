@@ -175,6 +175,20 @@ jQuery(function($) {
   });
   $("body").on("click", ".navbar-collapse ul li a:not(.dropdown-toggle)", function() {
     $(".navbar-toggle:visible").click();
+  }).on("click", ".showgraph", function(e) {
+    e.preventDefault();
+    var arr = [$(this).val()];
+    $("#statsmodal").modal("show");
+    $("#chart").toggle(true).empty();
+    $("#noresult2").hide();
+    setTimeout(function() {
+      socket.emit("request_stats", arr);
+    }, 800);
+  }).on("click", ".refreshstatus", function(e) {
+    e.preventDefault();
+    $("#id_host").val($(this).attr("data-host"));
+    $("#id_port").val($(this).attr("data-port"));
+    $("#requestform").trigger("submit");
   }).popover({
     html: true,
     placement: "bottom",
@@ -185,7 +199,7 @@ jQuery(function($) {
       return $(this).closest(".media").find(".playerdetails").html();
     }
   }).tooltip({
-    selector: ".navbar-nav li a, .canvasjs-chart-toolbar button",
+    selector: ".navbar-nav li a, .fa[title], .btn[title]",
     container: "body",
     placement: "bottom"
   });
@@ -206,7 +220,7 @@ jQuery(function($) {
       arr.push($(this).val());
     });
     $("#statsmodal").modal("show");
-    $("#chart").toggle(arr.length > 0);
+    $("#chart").toggle(arr.length > 0).empty();
     if(arr.length > 0) {
       $("#noresult2").hide();
       setTimeout(function() {

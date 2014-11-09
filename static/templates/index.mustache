@@ -37,6 +37,10 @@
             <i class="fa fa-search"></i>
             <span class="visible-xs-inline">增加 / 查詢</span>
           </a></li>
+          <li><a href="#stats" id="showstats" title="統計">
+            <i class="fa fa-line-chart"></i>
+            <span class="visible-xs-inline">統計</span>
+          </a></li>
           <li><a href="#help" data-toggle="modal" data-target="#helpmodal" target="_self" title="說明 / API">
             <i class="fa fa-question-circle"></i>
             <span class="visible-xs-inline">說明 / API</span>
@@ -44,10 +48,6 @@
           <li><a href="https://github.com/JLChnToZ/mcs2" title="Fork Me!">
             <i class="fa fa-github-alt"></i>
             <span class="visible-xs-inline">Fork Me!</span>
-          </a></li>
-          <li><a href="#stats" id="showstats" title="統計">
-            <i class="fa fa-area-chart"></i>
-            <span class="visible-xs-inline">統計</span>
           </a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="相關連結">
@@ -164,7 +164,7 @@
             <span class="sr-only">關閉</span>
           </button>
           <h4 class="modal-title" id="helpmodaltitle">
-            <i class="fa fa-area-chart"></i>
+            <i class="fa fa-line-chart"></i>
             伺服器統計
           </h4>
         </div>
@@ -205,8 +205,8 @@
       <i class="fa fa-lightbulb-o"></i>
       <b>提示: </b>
       如果想增加自己的伺服器, 除了可在上面增加之外, 還可以前往
-      <a href="http://www.minecraft-hk.com/forum-45-1.html">MCHK</a> /
-      <a href="http://bbs.hkcdc.org/forum-672-1.html">HKCDC</a>
+      <a href="http://www.minecraft-hk.com/forum-45-1.html" class="alert-link">MCHK</a> /
+      <a href="http://bbs.hkcdc.org/forum-672-1.html" class="alert-link">HKCDC</a>
       論壇各自的伺服器版塊新增, 這裡將在稍候時間自動取得你的伺服器資料.
     </div>
     <div class="alert alert-info fade in" role="alert">
@@ -243,7 +243,9 @@
   <!-- Script Loader -->
   <!-- Bundled: jQuery, Bootstrap, Mustache, Moment.js with locale, jQuery Mustache, jQuery-s2t, jQuery Async, Lunr.js -->
   <script src="/js/vendor/bundled.min.js"></script>
-  <script src="/js/vendor/jquery.canvasjs.min.js"></script>
+  <script src="/js/vendor/excanvas.js"></script>
+  <script src="/js/vendor/canvasjs.js"></script>
+  <script src="/js/vendor/jquery.canvasjs.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/mccolor.js"></script>
   <script src="/js/main.js"></script>
