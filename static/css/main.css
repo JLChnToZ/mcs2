@@ -1,5 +1,5 @@
 body {
-  padding-top: 80px;
+  padding-top: 50px;
 }
 .mccolor {
   white-space: pre-wrap;
@@ -33,4 +33,32 @@ div.popover {
   filter: url(/images/dropshadow.svg#drop-shadow);
   -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#444')";
   filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#444')";
+}
+.separator {
+  background: transparent url(/images/bar.png) no-repeat center center;
+  background-size: contain;
+  height: 50px;
+  border: none;
+}
+.jumbotron {
+  background: black url(/images/logo_bg.png) no-repeat center center;
+  background-size: 100% 100%;
+}
+.jumbotron * {
+  text-shadow: 0px 0px 20px #000;
+  color: #FFF;
+}
+#slist>div {
+  text-align: initial;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.navbar-brand {
+  background: transparent url(/images/logo_small.png) no-repeat center center;
+  background-size: 152px 40px;
+  width: 152px;
+  height: 40px;
+  display: block;
+  margin: 4px 0 inherit;
+  padding: 0;s
 }

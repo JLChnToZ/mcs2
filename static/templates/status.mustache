@@ -1,4 +1,6 @@
-  <div id="d{{hash}}" class="media"{{^status.maxPlayers}} data-hidden="true" style="display: none"{{/status.maxPlayers}}>
+<div id="d{{hash}}"{{^status.maxPlayers}} data-hidden="true" style="display: none"{{/status.maxPlayers}}>
+  <hr class="separator" />
+  <div class="media">
     <span class="pull-left">
       <img src="/icons/{{hash}}.png" class="media-object" />
     </span>
@@ -13,22 +15,23 @@
       <button type="button" class="btn btn-default btn-sm showgraph" value="{{hash}}" title="人數圖表">
         <i class="fa fa-line-chart"></i>
       </button>
+      <button type="button" class="btn btn-default btn-sm selectserver" value="{{hash}}" title="選取此伺服器" data-toggle="button">
+        <i class="fa fa-square-o"></i>
+      </button>
       <button type="button" class="btn btn-default btn-sm refreshstatus" data-host="{{host}}" data-port="{{port}}" title="重新整理">
         <i class="fa fa-refresh"></i>
       </button>
-    </div>
-    <div class="media-body">
+    </div>      
+   <div class="media-body">
       <h5 class="media-heading">
-        <label>
-          <input type="checkbox" class="selectserver" value="{{hash}}" />
-          <span class="motd">
-            <span class="mccolor">{{status.motd}}</span>
-          </span>
-        </label>
+        <span class="motd">
+          <span class="mccolor">{{status.motd}}</span>
+        </span>
       </h5>
       <div class="host">{{host}}:{{port}}</div>
       <div class="add-info">
         {{>other_info}}
       </div>
     </div>
+  </div>
 </div>

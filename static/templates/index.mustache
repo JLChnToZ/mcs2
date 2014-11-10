@@ -23,7 +23,7 @@
           <span class="icon-bar"></span>
         </button>
         <span class="navbar-brand">
-          <span class="hidden-sm">Minecraft 伺服器狀態人造衛星</span>
+          <span class="sr-only">Minecraft 伺服器狀態人造衛星</span>
         </span>
       </div>
       <div class="collapse navbar-collapse">
@@ -73,6 +73,58 @@
       </div>
     </div>
   </div>
+  
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="text-center"><img src="/images/logo.png" /></h1>
+      <p id="timenow" class="text-center"></p>
+    </div>
+  </div>
+  
+  <div class="container" role="main">
+    <noscript>
+      <div class="alert alert-danger" role="alert">
+        <i class="fa fa-exclamation-triangle"></i>
+        此系統需要使用 JavaScript, 請先啟動 JavaScript 或者轉用支援 JavaScript 的瀏覽器, 謝謝.
+      </div>
+    </noscript>
+    <div class="alert alert-danger" id="disconnected" role="alert">
+      <i class="fa fa-exclamation-triangle"></i>
+      <b>不好! 斷線了!</b><br />
+      線路不穩中... 正在嘗試再次連線...
+    </div>
+    <div class="alert alert-info fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">關閉</span>
+      </button>
+      <i class="fa fa-lightbulb-o"></i>
+      <b>提示: </b>
+      如果想增加自己的伺服器, 除了可在上面增加之外, 還可以前往
+      <a href="http://www.minecraft-hk.com/forum-45-1.html" class="alert-link">MCHK</a> /
+      <a href="http://bbs.hkcdc.org/forum-672-1.html" class="alert-link">HKCDC</a>
+      論壇各自的伺服器版塊新增, 這裡將在稍候時間自動取得你的伺服器資料.
+    </div>
+    <div id="slist">
+      {{#status}}
+        {{>status}}
+      {{/status}}
+    </div>
+  </div>
+  
+  <footer role="contentinfo">
+    <div class="container">
+      <p>&nbsp;</p>
+      <p><b>Disclaimer:</b>
+        <span>Use this at your own risk, I don't respond if you lose anything while you use it, even the computer get exploded. :)</span>
+      </p>
+      <p>Minecraft Server Satillite &copy; 2014 <a href="http://gh.jlctz.tk/">Jeremy Lam (JLChnToZ)</a>.
+        This page is is not affiliated with <a href="http://mojang.com/">Mojang AB</a>.
+        Minecraft content and materials are trademarks and copyrights of Mojang AB or its licensors. All rights reserved.
+      </p>
+    </div>
+  </footer>
+  
   <div class="modal fade" id="requestmodal" tabindex="-1" role="dialog" aria-labelledby="requestmodaltitle" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -130,6 +182,7 @@
       </div>
     </div>
   </div>
+  
   <div class="modal fade" id="helpmodal" tabindex="-1" role="dialog" aria-labelledby="helpmodaltitle" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -155,15 +208,16 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="statsmodal" tabindex="-1" role="dialog" aria-labelledby="helpmodaltitle" aria-hidden="true">
-    <div class="modal-dialog">
+  
+  <div class="modal fade" id="statsmodal" tabindex="-1" role="dialog" aria-labelledby="statsmodaltitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">關閉</span>
           </button>
-          <h4 class="modal-title" id="helpmodaltitle">
+          <h4 class="modal-title" id="statsmodaltitle">
             <i class="fa fa-line-chart"></i>
             伺服器統計
           </h4>
@@ -185,60 +239,6 @@
       </div>
     </div>
   </div>
-  <div class="container" role="main">
-    <noscript>
-      <div class="alert alert-danger" role="alert">
-        <i class="fa fa-exclamation-triangle"></i>
-        此系統需要使用 JavaScript, 請先啟動 JavaScript 或者轉用支援 JavaScript 的瀏覽器, 謝謝.
-      </div>
-    </noscript>
-    <div class="alert alert-danger" id="disconnected" role="alert">
-      <i class="fa fa-exclamation-triangle"></i>
-      <b>不好! 斷線了!</b><br />
-      線路不穩中... 正在嘗試再次連線...
-    </div>
-    <div class="alert alert-info fade in" role="alert">
-      <button type="button" class="close" data-dismiss="alert">
-        <span aria-hidden="true">&times;</span>
-        <span class="sr-only">關閉</span>
-      </button>
-      <i class="fa fa-lightbulb-o"></i>
-      <b>提示: </b>
-      如果想增加自己的伺服器, 除了可在上面增加之外, 還可以前往
-      <a href="http://www.minecraft-hk.com/forum-45-1.html" class="alert-link">MCHK</a> /
-      <a href="http://bbs.hkcdc.org/forum-672-1.html" class="alert-link">HKCDC</a>
-      論壇各自的伺服器版塊新增, 這裡將在稍候時間自動取得你的伺服器資料.
-    </div>
-    <div class="alert alert-info fade in" role="alert">
-      <i class="fa fa-clock-o"></i>
-      <b>人造衛星系統時間:</b>
-      <span id="timenow"></span>
-    </div>
-    <div class="panel panel-primary info">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          <i class="fa fa-info-circle"></i>
-          伺服器狀態列表
-        </h3>
-      </div>
-      <div class="panel-body" id="slist">
-        {{#status}}
-          {{>status}}
-        {{/status}}
-      </div>
-    </div>
-  </div>
-  <footer role="contentinfo">
-    <div class="container">
-      <p><b>Disclaimer:</b>
-        <span>Use this at your own risk, I don't respond if you lose anything while you use it, even the computer get exploded. :)</span>
-      </p>
-      <p>Minecraft Server Satillite &copy; 2014 <a href="http://gh.jlctz.tk/">Jeremy Lam (JLChnToZ)</a>.
-        This page is is not affiliated with <a href="http://mojang.com/">Mojang AB</a>.
-        Minecraft content and materials are trademarks and copyrights of Mojang AB or its licensors. All rights reserved.
-      </p>
-    </div>
-  </footer>
   
   <!-- Script Loader -->
   <!-- Bundled: jQuery, Bootstrap, Mustache, Moment.js with locale, jQuery Mustache, jQuery-s2t, jQuery Async, Lunr.js -->

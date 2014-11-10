@@ -22,7 +22,7 @@ ssd(function() {
   var singlereq;
   var iplist = {};
   var config = {};
-  var connectedList = [];
+  var onlineCount = 0;
   var stats;
   
   var args = argv.option([
@@ -108,16 +108,18 @@ ssd(function() {
   app.use(express.static(__dirname + "/static"));
   
   io.on("connection", function(socket) {
-    connectedList.push(socket);
+   onlineCount++;
     socket.emit("init", {
       timeStamp: new Date().getTime()
     });
-    io.sockets.emit("online_count", {
-      count: connectedList.length
+    io.emit("online_count", {
+      count: onlineCount
     });
     socket.on("disconnect", function() {
-      _.remove(connectedList, socket);
-      io.sockets.emit("online_count", connectedList.length);
+      onlineCount--;
+      io.emit("online_count", {
+        count: onlineCount
+      });
     });
     socket.on("reconnected", function(data) {
       var status = cron.serverstatus();

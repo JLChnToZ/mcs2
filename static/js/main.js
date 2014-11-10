@@ -175,6 +175,14 @@ jQuery(function($) {
   });
   $("body").on("click", ".navbar-collapse ul li a:not(.dropdown-toggle)", function() {
     $(".navbar-toggle:visible").click();
+  }).on("click", ".selectserver", function(e) {
+    e.preventDefault();
+    var $this = $(this);
+    setTimeout(function() {
+      $this.find(".fa").removeClass("fa-check-square-o fa-square-o").addClass(function() {
+        return $this.hasClass("active") ? "fa-check-square-o" : "fa-square-o";
+      });
+    }, 10); // A bit delay
   }).on("click", ".showgraph", function(e) {
     e.preventDefault();
     var arr = [$(this).val()];
@@ -216,7 +224,7 @@ jQuery(function($) {
   $("#showstats").click(function(e) {
     e.preventDefault();
     var arr = [];
-    $(".media:visible .selectserver:checked").each(function() {
+    $(".media:visible .selectserver.active").each(function() {
       arr.push($(this).val());
     });
     $("#statsmodal").modal("show");
