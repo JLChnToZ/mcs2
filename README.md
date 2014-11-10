@@ -1,5 +1,7 @@
-MCS2
+MCS2 (Minesat)
 ====
+
+![logo](https://i.imgur.com/pGIfvBW.png)
 
 Minecraft Server Satellite - Scans the Minecraft servers you want.
 
