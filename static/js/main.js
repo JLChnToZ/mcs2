@@ -53,13 +53,13 @@ jQuery(function($) {
   function doSearch() {
     var val = $("#searchtext").val();
     if(val.length > 0) {
-      $("#slist .media").hide();
+      $("#slist .statitem").hide();
       $.each(indeces.search(val), function(i, e) {
         var $e = $("#" + e.ref);
         if($e.attr("data-hidden") != "true") $e.show();
       });
     } else {
-      $("#slist .media").each(function(i, e) {
+      $("#slist .statitem").each(function(i, e) {
         var $e = $(e);
         $e.toggle($e.attr("data-hidden") != "true");
       });
@@ -204,7 +204,7 @@ jQuery(function($) {
     trigger: "focus",
     container: "body",
     content: function() {
-      return $(this).closest(".media").find(".playerdetails").html();
+      return $(this).closest(".statitem").find(".playerdetails").html();
     }
   }).tooltip({
     selector: ".navbar-nav li a, .fa[title], .btn[title]",
@@ -224,7 +224,7 @@ jQuery(function($) {
   $("#showstats").click(function(e) {
     e.preventDefault();
     var arr = [];
-    $(".media:visible .selectserver.active").each(function() {
+    $(".statitem:visible .selectserver.active").each(function() {
       arr.push($(this).val());
     });
     $("#statsmodal").modal("show");
@@ -243,7 +243,7 @@ jQuery(function($) {
   });
   $("#searchtext").keyup(doSearch);
   $("div:visible .mccolor").minecraftFormat();
-  $("#slist .media").each(function(i, e) {
+  $("#slist .statitem").each(function(i, e) {
     indexItem($(e));
   });
   setInterval(function() {
