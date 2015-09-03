@@ -22,6 +22,11 @@
       "jsonPath": "https://apps.wtako.net/mchkstat/list",
       "thread": "http://www.minecraft-hk.com/thread-{ThreadID}-1-1.html",
       "ip": "{IP}:{Port}"
+    },
+    {
+      "jsonPath": "https://forum.minecraft-hk.net/svlisting",
+      "thread": "https://forum.minecraft-hk.net/threads.{tid}~1-1",
+      "ip": "{sv_ip}"
     }
   ],
   "stats": {
