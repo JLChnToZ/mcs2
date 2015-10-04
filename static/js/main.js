@@ -98,7 +98,7 @@ jQuery(function($) {
     if(data) {
       var dname = "#d" + data.hash, $dname = $(dname), hasData;
       if($dname.length >= 0) {
-        $(dname + " .media-object").attr("src", "/icons/" + data.hash + ".png?t=" + data.lastUpdate);
+        $(dname + " .media-object").attr("src", "/icons/" + data.hash + ".png");
         $(dname + " .motd").empty().append(
           $create("span").addClass("mccolor").text(data.status.motd)
         );

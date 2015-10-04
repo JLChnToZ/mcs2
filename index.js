@@ -24,7 +24,7 @@ ssd(function() {
   var config = {};
   var onlineCount = 0;
   var stats;
-  
+
   var args = argv.option([
     {
       name: "port",
@@ -38,12 +38,12 @@ ssd(function() {
       description: "(Optional) which ip will the server runs on."
     }
   ]).run();
-  
+
   params.extend(app);
   app.engine("mustache", mustacheExpress());
   app.set("view engine", "mustache");
   app.set("views", __dirname + "/static/templates");
-  
+
   app.get("/", function(req, res) {
     var cfg = _.deepClone(config);
     cfg.singleUseLimit /= 1000;
@@ -51,11 +51,14 @@ ssd(function() {
     cfg.pingActiveServerPeriod /= 60 * 1000;
     cfg.pingInactiveServerPeriod /= 60 * 1000;
     res.render("index", {
-      status: cron.serverstatus(),
+      status: _.reduce(cron.serverstatus(), function(arr, item) {
+        if(item && item.status) arr.push(item);
+        return arr;
+      }, []),
       config: cfg
     });
   });
-  
+
   app.param("hash", /^([a-f0-9]{32})(?:_)?(?:\.png)?$/i);
   app.get("/icons/:hash", function(req, res) {
     var record = cron.findServer(req.params.hash[1]);
@@ -73,7 +76,7 @@ ssd(function() {
       res.redirect("/images/mc.png");
     }
   });
-  
+
   app.param("ipaddr", /^((?:(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|(?:(?:\w|\w[\w\-]*\w)\.)*(?:\w|\w[\w\-]*\w))(?::(0*(?:[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])))?(?:\.json)?$/i);
   app.get("/api/:ipaddr", function(req, res) {
     var clientIP = req.get("x-forwarded-for") || req.connection.remoteAddress;
@@ -97,7 +100,7 @@ ssd(function() {
       }
     });
   });
-  
+
   app.use(function(req, res, next) {
     if (/\.min\.(css|js)$/.test(req.url))
       res._no_minify = true;
@@ -106,7 +109,7 @@ ssd(function() {
   app.use(compression());
   app.use(minify());
   app.use(express.static(__dirname + "/static"));
-  
+
   io.on("connection", function(socket) {
    onlineCount++;
     socket.emit("init", {
@@ -163,11 +166,11 @@ ssd(function() {
       });
     }
   });
-  
+
   setInterval(function() {
     io.emit("time_update", Date.now());
   }, 10000);
-  
+
   var broadcastUpdate = function(data) {
     io.emit("status_update", data);
     if(stats)
@@ -179,7 +182,7 @@ ssd(function() {
         if(err) console.log(err);
       });
   };
-  
+
   jsonfile.readFile("./config.json", function(err, cfg) {
     if(cfg) config = cfg;
     var runPort = args.options.port || config.port || process.env.PORT || 3838;
