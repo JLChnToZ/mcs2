@@ -27,7 +27,7 @@ CanvasJS.addCultureInfo("zh-cn", {
 // Main Function
 jQuery(function($) {
   var socket = io(), firstConnect = true, lastUpdate = 0, timeOffset = 0, isTraditional = true;
-  var locales = ["zh-tw", "zh-cn"];
+  var currentLocale = 'zh-tw';
   var indeces = lunr(function() {
     this.field("motd", { boost: 10 });
     this.field("players", { boost: 8 });
@@ -44,7 +44,7 @@ jQuery(function($) {
   function calcTime() {
     $("div:visible .add-time").each(function() {
       var t = parseInt($(this).attr("data-timestamp"));
-      $(this).text(t ? moment(t + timeOffset).locale(locales).fromNow() : "-");
+      $(this).text(t ? moment(t + timeOffset).fromNow() : "-").attr('lang', currentLocale);
     });
   }
   function indexItem(e) {
@@ -70,6 +70,7 @@ jQuery(function($) {
       });
     }
   }
+  moment.locale(["zh-tw", "zh-cn"]); // default
   $.ajax("/templates/other_info.mustache").done(function(d) {
     $.Mustache.add("other_info", d);
   });
@@ -77,10 +78,10 @@ jQuery(function($) {
     $.Mustache.add("status", d);
   });
   $.getJSON("/headers", function(headers) {
-    var _locales, _lParams, m, i, l;
+    var _locales, _lParams, m, i, l, cl, cc;
     _locales = headers[findPropertyName(headers, 'accept-language')].replace(/\s+/g, '').split(',');
     l = _locales.length;
-    for(var i = 0; i < l; i++) {
+    for(i = 0; i < l; i++) {
       _lParams = _locales[i].split(';');
       if(_lParams.length < 2) _lParams.push('q=1');
       m = _lParams[1].match(/q=([\.\d]+)/);
@@ -89,8 +90,17 @@ jQuery(function($) {
       _locales[i] = _lParams;
     }
     _locales.sort(function(lhs, rhs) { return rhs[1] - lhs[1]; });
-    for(var i = 0; i < l; i++) _locales[i] = _locales[i][0];
-    locales = _locales;
+    for(i = 0; i < l; i++) _locales[i] = _locales[i][0];
+    moment.locale(_locales);
+    currentLocale = moment.locale();
+    cl = currentLocale.toLowerCase();
+    for(i = 0; i < l; i++) {
+      cc = _locales[i].toLowerCase();
+      if(cl.indexOf(cc) > -1 || cc.indexOf(cl) > -1) {
+        currentLocale = _locales[i];
+        break;
+      }
+    }
   });
   socket.on("connect", function() {
     if(firstConnect) {
@@ -268,7 +278,7 @@ jQuery(function($) {
     indexItem($(e));
   });
   setInterval(function() {
-    $("#timenow").text(moment(Date.now() - timeOffset).locale(locales).format("dddd, MMMM Do YYYY, h:mm:ss a"));
+    $("#timenow").text(moment(Date.now() - timeOffset).format("LLLL")).attr('lang', currentLocale);;
   }, 250);
   calcTime();
 });
