@@ -27,19 +27,24 @@ CanvasJS.addCultureInfo("zh-cn", {
 // Main Function
 jQuery(function($) {
   var socket = io(), firstConnect = true, lastUpdate = 0, timeOffset = 0, isTraditional = true;
+  var locales = ["zh-tw", "zh-cn"];
   var indeces = lunr(function() {
     this.field("motd", { boost: 10 });
     this.field("players", { boost: 8 });
     this.field("url", { boost: 6 });
     this.ref("id");
   });
+  function findPropertyName(obj, prop) {
+    prop = (prop + '').toLowerCase();
+    for(var p in obj) if(obj.hasOwnProperty(p) && prop == (p + '').toLowerCase()) return p;
+  }
   function $create(elm) {
     return $(document.createElement(elm));
   }
   function calcTime() {
     $("div:visible .add-time").each(function() {
       var t = parseInt($(this).attr("data-timestamp"));
-      $(this).text(t ? moment(t + timeOffset).locale(isTraditional ? "zh-tw" : "zh-cn").fromNow() : "-");
+      $(this).text(t ? moment(t + timeOffset).locale(locales).fromNow() : "-");
     });
   }
   function indexItem(e) {
@@ -70,6 +75,22 @@ jQuery(function($) {
   });
   $.ajax("/templates/status.mustache").done(function(d) {
     $.Mustache.add("status", d);
+  });
+  $.getJSON("/headers", function(headers) {
+    var _locales, _lParams, m, i, l;
+    _locales = headers[findPropertyName(headers, 'accept-language')].replace(/\s+/g, '').split(',');
+    l = _locales.length;
+    for(var i = 0; i < l; i++) {
+      _lParams = _locales[i].split(';');
+      if(_lParams.length < 2) _lParams.push('q=1');
+      m = _lParams[1].match(/q=([\.\d]+)/);
+      if(!m) m = ['', '1'];
+      _lParams[1] = parseFloat(m[1]);
+      _locales[i] = _lParams;
+    }
+    _locales.sort(function(lhs, rhs) { return rhs[1] - lhs[1]; });
+    for(var i = 0; i < l; i++) _locales[i] = _locales[i][0];
+    locales = _locales;
   });
   socket.on("connect", function() {
     if(firstConnect) {
@@ -247,7 +268,7 @@ jQuery(function($) {
     indexItem($(e));
   });
   setInterval(function() {
-    $("#timenow").text(moment(Date.now() - timeOffset).locale(isTraditional ? "zh-tw" : "zh-cn").format("dddd, MMMM Do YYYY, h:mm:ss a"));
+    $("#timenow").text(moment(Date.now() - timeOffset).locale(locales).format("dddd, MMMM Do YYYY, h:mm:ss a"));
   }, 250);
   calcTime();
 });
