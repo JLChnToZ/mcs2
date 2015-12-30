@@ -76,8 +76,10 @@ ssd(function() {
         res.header("Access-Control-Allow-Headers", "X-Requested-With");
         res.send(data.buffer);
       }
-    } else {
+    } else if(record) {
       res.redirect("/images/mc.png");
+    } else {
+      res.status(404);
     }
   });
 
