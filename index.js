@@ -52,7 +52,7 @@ ssd(function() {
     cfg.pingInactiveServerPeriod /= 60 * 1000;
     res.render("index", {
       status: _.reduce(cron.serverstatus(), function(arr, item) {
-        if(item && item.status && item.status.maxPlayers) arr.push(item);
+        if(item && item.status && item.status.maxPlayers && !item.ignore) arr.push(item);
         return arr;
       }, []),
       config: cfg
