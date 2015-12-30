@@ -79,7 +79,7 @@ ssd(function() {
     } else if(record) {
       res.redirect("/images/mc.png");
     } else {
-      res.status(404);
+      res.status(404).send('Not found');
     }
   });
 
